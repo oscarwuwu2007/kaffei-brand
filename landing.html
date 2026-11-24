@@ -12,7 +12,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <style>
-:root{--hueso:#FAF3EA;--crema:#E4D3BE;--cafe:#5A3825;--canela:#8C5A3C;--espresso:#2B1B12;--oro:#B8925A;--tinta:#3B2619;--W:400px;--H:571px}
+:root{--hueso:#FAF3EA;--crema:#E4D3BE;--cafe:#5A3825;--canela:#8C5A3C;--espresso:#2B1B12;--oro:#B8925A;--tinta:#3B2619;--perg:#ecdbb6;--W:400px;--H:571px}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:var(--espresso)}
 html{scrollbar-width:none}html::-webkit-scrollbar{display:none}
@@ -47,7 +47,7 @@ img{display:block}
 .single .board{left:-6px}
 .leaf{position:absolute;top:0;left:50%;width:var(--W);height:100%;transform-origin:left center;transform-style:preserve-3d;will-change:transform}
 .single .leaf{left:0}
-.face{position:absolute;inset:0;overflow:hidden;container-type:size;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--hueso)}
+.face{position:absolute;inset:0;overflow:hidden;container-type:size;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--perg)}
 .face.back{transform:rotateY(180deg)}
 .face.front{border-radius:0 3px 3px 0}.face.back{border-radius:3px 0 0 3px}
 .face::before{content:"";position:absolute;inset:0;z-index:8;pointer-events:none}
@@ -85,14 +85,20 @@ img{display:block}
 .tl li.goal::before{background:var(--oro);box-shadow:none}
 .tl b{display:block;font-weight:500;font-size:max(18px,6.2cqw);line-height:1.05;color:var(--espresso)}
 .tl span{font-style:italic;font-size:max(12px,3.8cqw);color:var(--canela)}
-.sec{display:flex;align-items:center;gap:4cqw;margin-top:7cqw;font-style:italic;font-size:max(14px,4.8cqw);color:var(--oro)}
+.sec{display:flex;align-items:center;gap:4cqw;margin-top:6cqw;margin-bottom:1cqw;font-style:italic;font-size:max(14px,4.8cqw);color:var(--oro)}
 .sec::after{content:"";flex:1;height:1px;background:var(--crema)}
-.it{margin-top:4cqw}
-.it .r{display:flex;align-items:baseline;gap:2.5cqw}
+.it{all:unset;box-sizing:border-box;display:flex;align-items:baseline;gap:2.5cqw;width:100%;padding:1.9cqw 0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.it:focus-visible{outline:2px solid var(--oro);outline-offset:3px}
+.it:active b{color:var(--canela)}
+.it .q{font:500 max(11px,3.2cqw) Inter,system-ui,sans-serif;color:var(--hueso);background:var(--cafe);border-radius:99px;padding:.2em .6em;margin-left:1.5cqw;display:none}
+.it.on .q{display:inline-block}
 .it b{font-weight:500;font-size:max(18px,6cqw);line-height:1.1;color:var(--espresso)}
 .it i{flex:1;border-bottom:1px dotted rgba(90,56,37,.45);transform:translateY(-.3em)}
 .it span{font:400 max(11px,3.2cqw) Inter,system-ui,sans-serif;color:var(--cafe);white-space:nowrap}
-.it p{font-style:italic;font-size:max(12px,3.8cqw);color:rgba(90,56,37,.75);margin-top:.5cqw}
+.hint{margin-top:auto;font-style:italic;font-size:max(12px,3.8cqw);color:var(--canela)}
+.steps{margin-top:8cqw;list-style:none;counter-reset:s}
+.steps li{counter-increment:s;display:flex;gap:4cqw;padding:3.5cqw 0;border-top:1px solid rgba(228,211,190,.8);font-size:max(15px,5cqw);color:var(--espresso)}
+.steps li::before{content:counter(s);font-style:italic;color:var(--oro);min-width:5cqw}
 .note{margin-top:auto;padding-top:5cqw;border-top:1px solid var(--crema);font-style:italic;color:var(--canela)}
 .ct dt{font-style:italic;font-size:max(12px,3.8cqw);color:var(--canela);margin-top:6cqw}
 .ct dd{font-weight:500;font-size:max(22px,7.4cqw);line-height:1.1;color:var(--espresso)}
@@ -108,11 +114,36 @@ img{display:block}
 .cover p{margin-top:4cqw;font-style:italic;font-size:4.4cqw;color:var(--oro)}
 .endp{position:absolute;inset:0;background:var(--cafe) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cg fill='%238C5A3C'%3E%3Cellipse cx='15' cy='17' rx='6' ry='9' transform='rotate(-28 15 17)'/%3E%3Cellipse cx='45' cy='45' rx='6' ry='9' transform='rotate(32 45 45)'/%3E%3C/g%3E%3Cg fill='none' stroke='%235A3825' stroke-width='1.2' stroke-linecap='round'%3E%3Cpath d='M18 9 C12 14 19 20 12 25'/%3E%3Cpath d='M42 37 C49 42 42 48 49 53'/%3E%3C/g%3E%3C/svg%3E")}
 
-.crumb{position:absolute;left:50%;top:60%;width:7px;height:6px;border-radius:45%;background:#8f1820;z-index:6;pointer-events:none}
+.crumb{position:absolute;left:50%;top:60%;width:7px;height:6px;border-radius:45%;background:#5e3a24;z-index:6;pointer-events:none}
 .spark{position:absolute;left:50%;top:50%;width:2px;height:16px;border-radius:2px;background:linear-gradient(#f3d9a2,rgba(184,146,90,0));z-index:7;pointer-events:none;transform-origin:50% 0}
 .dust{position:absolute;width:3px;height:3px;border-radius:50%;background:#e9c98f;opacity:0;pointer-events:none;animation:dust linear infinite}
 @keyframes dust{0%{transform:translateY(0);opacity:0}15%{opacity:.35}85%{opacity:.25}100%{transform:translateY(-60vh);opacity:0}}
 @media (prefers-reduced-motion:reduce){.dust{display:none}}
+.dirt{position:absolute;inset:0;z-index:7;pointer-events:none;mix-blend-mode:multiply;
+ background:
+  radial-gradient(ellipse 34cqw 24cqw at var(--bx) var(--by),rgba(140,90,40,.16),transparent 70%),
+  radial-gradient(ellipse 22cqw 30cqw at var(--cx) var(--cy),rgba(120,75,35,.13),transparent 70%),
+  radial-gradient(ellipse 40cqw 18cqw at var(--rx) var(--ry),rgba(150,100,45,.10),transparent 70%),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012' numOctaves='3' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .38 0 0 0 0 .2 0 0 0 .5 -.12'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E"),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .3 0 0 0 0 .15 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+ background-size:auto,auto,auto,cover,auto;
+ box-shadow:inset 0 0 9cqw rgba(120,72,28,.45),inset 0 0 2.5cqw rgba(85,48,18,.45),inset 0 0 .6cqw rgba(60,32,12,.5)}
+.face.hard .dirt{display:none}
+/* pedido */
+#order{position:fixed;left:50%;bottom:16px;z-index:50;display:flex;align-items:center;gap:14px;padding:10px 10px 10px 20px;border-radius:99px;background:rgba(43,27,18,.92);backdrop-filter:blur(8px);color:var(--hueso);font:400 14px Inter,system-ui,sans-serif;box-shadow:0 12px 30px rgba(0,0,0,.35);transform:translate(-50%,140%);transition:transform .45s cubic-bezier(.3,1.4,.5,1)}
+#order.show{transform:translate(-50%,0)}
+#order .sum b{font-weight:500}
+#order button{all:unset;cursor:pointer;color:rgba(250,243,234,.6);font-size:13px}
+#order button:hover{color:var(--hueso)}
+#order a{background:var(--oro);color:var(--espresso);text-decoration:none;font-weight:500;padding:10px 18px;border-radius:99px;white-space:nowrap}
+#order a:focus-visible,#order button:focus-visible{outline:2px solid var(--oro);outline-offset:3px}
+/* celular: menú hacia abajo */
+#mlist{display:none;padding:28px 14px 110px}
+#mlist .sheet{position:relative;width:min(100%,520px);aspect-ratio:.7;margin:0 auto 18px;container-type:size;background:var(--perg);border-radius:3px;overflow:hidden;box-shadow:0 14px 30px rgba(0,0,0,.35)}
+#mlist .sheet .rh{text-align:left}
+body.listmode #mlist{display:block}
+@keyframes lin{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+body.listmode #stage,body.listmode #spacer,body.listmode #cue{display:none}
 #cue{position:fixed;left:0;right:0;bottom:20px;text-align:center;font-style:italic;font-size:16px;color:rgba(228,211,190,.75);opacity:0;pointer-events:none}
 #cue::after{content:"";display:block;width:1px;height:28px;margin:8px auto 0;background:linear-gradient(var(--oro),transparent);animation:cue 2.2s ease-in-out infinite;transform-origin:top}
 @keyframes cue{0%{transform:scaleY(.15);opacity:0}50%{transform:scaleY(1);opacity:1}100%{opacity:0}}
@@ -142,10 +173,10 @@ img{display:block}
    <div class="seal" id="seal">
     <svg viewBox="0 0 100 100">
      <defs>
-      <radialGradient id="wx" cx="38%" cy="32%" r="70%"><stop offset="0" stop-color="#cf3a32"/><stop offset=".55" stop-color="#a01a22"/><stop offset="1" stop-color="#6e0c13"/></radialGradient>
+      <radialGradient id="wx" cx="38%" cy="32%" r="70%"><stop offset="0" stop-color="#9a6a45"/><stop offset=".55" stop-color="#6b4229"/><stop offset="1" stop-color="#3d2416"/></radialGradient>
       <clipPath id="cl"><polygon points="0,0 52,0 46,38 55,62 47,100 0,100"/></clipPath>
       <clipPath id="cr"><polygon points="52,0 100,0 100,100 47,100 55,62 46,38"/></clipPath>
-      <g id="wax"><path d="M50 4 C60 3 64 10 72 9 C82 10 84 20 90 26 C97 34 93 42 96 50 C98 60 91 64 91 72 C89 82 80 84 74 90 C66 97 58 93 50 96 C40 98 36 91 28 91 C18 89 16 80 10 74 C3 66 7 58 4 50 C2 40 9 36 9 28 C11 18 20 16 26 10 C34 3 42 7 50 4Z" fill="url(#wx)"/><circle cx="50" cy="50" r="31" fill="none" stroke="#6e0c13" stroke-width="1.6" opacity=".7"/><text x="50" y="62" text-anchor="middle" font-family="Cormorant Garamond,serif" font-weight="600" font-size="36" fill="#7a0f16">K</text></g>
+      <g id="wax"><path d="M50 4 C60 3 64 10 72 9 C82 10 84 20 90 26 C97 34 93 42 96 50 C98 60 91 64 91 72 C89 82 80 84 74 90 C66 97 58 93 50 96 C40 98 36 91 28 91 C18 89 16 80 10 74 C3 66 7 58 4 50 C2 40 9 36 9 28 C11 18 20 16 26 10 C34 3 42 7 50 4Z" fill="url(#wx)"/><circle cx="50" cy="50" r="31" fill="none" stroke="#3d2416" stroke-width="1.6" opacity=".7"/><image href="assets/civeta-crema.png" x="23" y="40.5" width="54" height="21" opacity=".25"/><image href="assets/civeta-espresso.png" x="23" y="39.5" width="54" height="21" opacity=".75"/></g>
      </defs>
      <g id="sl" clip-path="url(#cl)"><use href="#wax"/></g>
      <g id="sr" clip-path="url(#cr)"><use href="#wax"/></g>
@@ -155,12 +186,16 @@ img{display:block}
  </div>
 </div>
 <p id="cue">Desliza para pasar la página</p>
+<div id="mlist"></div>
+<div id="order" role="region" aria-label="Pedido"><span class="sum"></span><button type="button" id="clear">Vaciar</button><a id="send" target="_blank" rel="noopener">Pedir por WhatsApp</a></div>
 <div id="spacer"></div>
 
 <script>
 const WA='https://wa.me/50600000000?text=Hola%2C%20quisiera%20hacer%20un%20pedido%20de%20Kaffei.';
 const rh=t=>`<p class="rh">${t}</p>`,fol=n=>`<p class="fol">${n}</p>`;
-const item=(n,p,d)=>`<div class="it"><div class="r"><b>${n}</b><i></i><span>${p}</span></div><p>${d}</p></div>`;
+const MENU={latte:['Latte',3200],croissant:['Croissant',3800],rollo:['Rollo de canela',4200],chocolate:['Torta de chocolate',6500],limon:['Tarta de limón',5200],cacao:['Tarta de cacao',5500]};
+const crc=n=>'₡'+n.toLocaleString('es-CR').replace(/[.,]/g,' ');
+const item=id=>`<button class="it" type="button" data-item="${id}"><b>${MENU[id][0]}</b><em class="q"></em><i></i><span>${crc(MENU[id][1])}</span></button>`;
 const etapa=(lab,tit,desc,img,pos,head,f)=>`<div class="pg st">${rh(head)}<div class="ph"><img src="assets/fotos/${img}" alt="${tit}" ${pos?`style="object-position:${pos}"`:''}></div><p class="n">${lab}</p><h3>${tit}</h3><p class="d">${desc}</p>${fol(f)}</div>`;
 
 const P={
@@ -179,8 +214,8 @@ const P={
  e2:{html:etapa('Etapa 2','Mini tienda','Primer local propio, pequeño. Café de especialidad y repostería para llevar o para quedarse.','fachada.jpg','50% 40%','Kaffei',5)},
  e3:{html:etapa('Etapa 3','Restaurante y cafetería','Formato mayor con cocina propia. Desayunos, brunch y almuerzos.','brunch.jpg','','Evolución',6)},
  e4:{html:`<div class="pg st">${rh('Kaffei')}<div class="map"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" fill="none"><path d="M60 230 C130 160 170 200 210 145 S300 85 345 65" stroke="#B8925A" stroke-opacity=".7" stroke-width="1.4" stroke-dasharray="3 6"/><g fill="#B8925A"><circle cx="60" cy="230" r="5"/><circle cx="210" cy="145" r="5"/><circle cx="345" cy="65" r="5"/></g></svg></div><p class="n">Etapa 4 · la meta</p><h3>Varias sedes</h3><p class="d">Nuevas ubicaciones con la misma carta y el mismo estándar.</p>${fol(7)}</div>`},
- m1:{html:`<div class="pg">${rh('Menú')}<p class="chap">III</p><h2 class="ttl">Menú</h2><p class="sec">Café</p>${item('Latte','₡3 200','Espresso y leche texturizada.')}<p class="sec">Repostería</p>${item('Croissant','₡3 800','Mantequilla, laminado a mano.')}${item('Rollo de canela','₡4 200','Canela y glaseado.')}${fol(8)}</div>`},
- m2:{html:`<div class="pg">${rh('Kaffei')}<p class="sec" style="margin-top:2cqw">Tortas y tartas</p>${item('Torta de chocolate','₡6 500','Ganache oscuro y hoja de oro.')}${item('Tarta de limón','₡5 200','Crema de limón, masa quebrada.')}${item('Tarta de cacao','₡5 500','Ganache de cacao.')}<p class="note">Pedidos por WhatsApp, con un día de anticipación.</p>${fol(9)}</div>`},
+ m1:{html:`<div class="pg">${rh('Menú')}<h2 class="ttl">Menú</h2><p class="sec">Café</p>${item('latte')}<p class="sec">Repostería</p>${item('croissant')}${item('rollo')}${item('chocolate')}${item('limon')}${item('cacao')}<p class="hint" style="margin-top:5cqw;margin-bottom:5cqw">Toca un producto para agregarlo a tu pedido.</p>${fol(8)}</div>`},
+ m2:{html:`<div class="pg">${rh('Kaffei')}<h2 class="ttl">Cómo pedir</h2><ol class="steps"><li>Elige en el menú.</li><li>Envía el pedido por WhatsApp.</li><li>Lo preparamos con un día de anticipación.</li></ol>${fol(9)}</div>`},
  ct:{html:`<div class="pg ct">${rh('Contacto')}<p class="chap">IV</p><h2 class="ttl">Contacto</h2><dl>
   <dt>Pedidos</dt><dd><a href="${WA}" target="_blank" rel="noopener">Escribir por WhatsApp</a><small>Con un día de anticipación.</small></dd>
   <dt>Instagram</dt><dd><a href="https://instagram.com/kaffei" target="_blank" rel="noopener">@kaffei</a><small>Fechas de ferias y novedades.</small></dd>
@@ -193,7 +228,35 @@ const SINGLE=[P.cover,P.title,P.que,P.plate,P.evol,P.e1,P.e2,P.e3,P.e4,P.m1,P.m2
 const $=id=>document.getElementById(id);
 const book=$('book'),spacer=$('spacer'),cue=$('cue');
 const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),sm=t=>t*t*(3-2*t);
-let single,leaves=[],flips=0,boardL,opened={t:0},prog=0;
+let done=false,single,leaves=[],flips=0,boardL,opened={t:0},prog=0;
+
+const r=(a,b)=>(a+Math.random()*(b-a)).toFixed(1);
+function dirt(){return `<div class="dirt" style="--rx:${r(15,85)}%;--ry:${r(60,95)}%;--rr:${r(9,14)}cqw;--bx:${r(0,100)}%;--by:${r(0,100)}%;--cx:${r(0,100)}%;--cy:${r(0,100)}%"></div>`}
+
+/* pedido */
+const order={};
+const WA_NUM='50600000000';
+function paintOrder(){
+ let n=0,total=0;const lines=[];
+ for(const [id,q] of Object.entries(order)){if(!q)continue;n+=q;total+=q*MENU[id][1];lines.push(`${q} × ${MENU[id][0]}`)}
+ document.querySelectorAll('[data-item]').forEach(el=>{const q=order[el.dataset.item]||0;el.classList.toggle('on',q>0);el.querySelector('.q').textContent='×'+q});
+ const bar=$('order');bar.classList.toggle('show',n>0);
+ bar.querySelector('.sum').innerHTML=`<b>${n}</b> ${n===1?'producto':'productos'} · ${crc(total)}`;
+ $('send').href=`https://wa.me/${WA_NUM}?text=`+encodeURIComponent('Hola, quisiera pedir:\n'+lines.join('\n')+'\nTotal: '+crc(total));
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-item]');if(!b)return;const id=b.dataset.item;order[id]=(order[id]||0)+1;paintOrder();
+ gsap.fromTo(b,{scale:.97},{scale:1,duration:.35,ease:'back.out(3)'})});
+$('clear').addEventListener('click',()=>{for(const k in order)delete order[k];paintOrder()});
+
+/* celular: páginas una debajo de otra */
+const LIST=[P.title,P.que,P.plate,P.evol,P.e1,P.e2,P.e3,P.e4,P.m1,P.m2,P.ct];
+function mode(){
+ if(!done)return;
+ const list=innerWidth<820||innerWidth/innerHeight<.9;
+ document.body.classList.toggle('listmode',list);
+ if(list&&!$('mlist').children.length){$('mlist').innerHTML=LIST.map(p=>`<div class="sheet">${p.html}${dirt()}</div>`).join('');paintOrder()}
+ ScrollTrigger.refresh();
+}
 
 function sizes(){
  single=innerWidth<820||innerWidth/innerHeight<.9;
@@ -206,7 +269,7 @@ function build(){
  book.className='book'+(single?' single':'');
  book.innerHTML='<div class="board"></div>'+(single?'':'<div class="board l"></div>');
  boardL=book.querySelector('.board.l');
- const face=(p,s)=>p?`<div class="face ${s}${p.hard?' hard':''}">${p.html}</div>`:'';
+ const face=(p,s)=>p?`<div class="face ${s}${p.hard?' hard':''}">${p.html}${dirt()}</div>`:'';
  leaves=(single?SINGLE.map(p=>[p]):SPREAD).map(([f,b])=>{const el=document.createElement('div');el.className='leaf';el.innerHTML=face(f,'front')+face(b,'back');book.appendChild(el);return el});
  flips=leaves.length-2;/* la tapa se abre sola; la última hoja no se pasa */
  spacer.style.height=Math.round(innerHeight*(1+flips*.85))+'px';
@@ -230,7 +293,7 @@ lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gs
 if('scrollRestoration' in history)history.scrollRestoration='manual';scrollTo(0,0);
 build();
 ScrollTrigger.create({trigger:spacer,start:'top top',end:'bottom bottom',onUpdate:s=>{prog=s.progress*flips;render();cue.style.visibility=prog>.03?'hidden':'visible'}});
-let rw;addEventListener('resize',()=>{clearTimeout(rw);rw=setTimeout(build,150)});
+let rw;addEventListener('resize',()=>{clearTimeout(rw);rw=setTimeout(()=>{build();paintOrder();mode()},150)});
 
 /* INTRO: sobre horizontal con el libro acostado adentro */
 const stage=$('stage'),rig=$('rig');
@@ -273,8 +336,8 @@ tl.from([...envParts,'#bookc'],{y:'+='+innerHeight,rotation:'-=8',duration:1.1,e
  .to(opened,{t:1,duration:1.1,ease:'power2.inOut',onUpdate:render},'out+=2.3')
  .to(cue,{opacity:1,duration:.6},'-=.2');
 
-let done=false;
-function endIntro(){if(done)return;done=true;document.documentElement.classList.remove('lock');envParts.forEach(s=>$(s.slice(1)).remove());lenis.start();ScrollTrigger.refresh()}
+function endIntro(){if(done)return;done=true;document.documentElement.classList.remove('lock');envParts.forEach(s=>$(s.slice(1)).remove());lenis.start();
+ if(single){gsap.to('#stage',{opacity:0,duration:.5,onComplete:()=>{mode();scrollTo(0,0)}})}else mode()}
 const hurry=()=>{if(!done)tl.timeScale(4)};
 ['wheel','touchstart','keydown','pointerdown'].forEach(e=>addEventListener(e,hurry,{passive:true}));
 const Q=new URLSearchParams(location.search);
