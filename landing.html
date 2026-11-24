@@ -387,7 +387,7 @@ tl.call(()=>{
  if(tapped){tapped=false;released=true;setTimeout(()=>tl.play(),60);return}
  waiting=true;document.getElementById('tap').classList.add('show');
  idle=gsap.to('#seal',{scale:1.1,duration:.6,yoyo:true,repeat:-1,ease:'sine.inOut'});
- autoOpen=setTimeout(openSeal,3000)/* si nadie toca, se abre solo */
+ autoOpen=setTimeout(openSeal,1000)/* si nadie toca, se abre solo */
 },null,'crack');
 function openSeal(){
  if(done)return;
