@@ -35,6 +35,7 @@ img{display:block}
 .flap .f{position:absolute;left:0;right:0;top:0;height:100%;transform-origin:50% 0}
 .flap .b{top:auto;bottom:100%;transform-origin:50% 100%;transform:scaleY(0)}
 .eseal{z-index:5;pointer-events:none}
+.eseal .seal{pointer-events:auto}
 .seal{position:absolute;left:50%;top:60%;width:calc(var(--EH)*.24);aspect-ratio:1;margin:calc(var(--EH)*-.12) 0 0 calc(var(--EH)*-.12);filter:drop-shadow(0 3px 4px rgba(0,0,0,.35))}
 .seal svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 
@@ -139,11 +140,19 @@ img{display:block}
 #order a:focus-visible,#order button:focus-visible{outline:2px solid var(--oro);outline-offset:3px}
 /* celular: menú hacia abajo */
 #mlist{display:none;padding:28px 14px 110px}
-#mlist .sheet{position:relative;width:min(100%,520px);aspect-ratio:.7;margin:0 auto 18px;container-type:size;background:var(--perg);border-radius:3px;overflow:hidden;box-shadow:0 14px 30px rgba(0,0,0,.35)}
+#mlist .sheet{position:relative;width:min(100%,520px);margin:0 auto 18px;container-type:inline-size;background:var(--perg);border-radius:3px;overflow:hidden;box-shadow:0 14px 30px rgba(0,0,0,.35)}
 #mlist .sheet .rh{text-align:left}
+#mlist .fol{display:none}
+#mlist .sheet .pg{position:relative;inset:auto;min-height:0;padding-bottom:16cqw}
+#mlist .sheet .ph,#mlist .sheet .map{flex:none;aspect-ratio:4/3}
+#mlist .sheet .tl,#mlist .sheet .hint{margin-top:8cqw}
+#mlist .sheet .pg[style*="justify-content:center"]{padding:22cqw 11cqw 26cqw}
 body.listmode #mlist{display:block}
 @keyframes lin{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 body.listmode #stage,body.listmode #spacer,body.listmode #cue{display:none}
+#tap{position:fixed;left:0;right:0;bottom:12%;z-index:20;text-align:center;font-style:italic;font-size:18px;color:rgba(228,211,190,.85);opacity:0;pointer-events:none;transition:opacity .6s}
+#tap.show{opacity:1}
+#seal{cursor:pointer}
 #cue{position:fixed;left:0;right:0;bottom:20px;text-align:center;font-style:italic;font-size:16px;color:rgba(228,211,190,.75);opacity:0;pointer-events:none}
 #cue::after{content:"";display:block;width:1px;height:28px;margin:8px auto 0;background:linear-gradient(var(--oro),transparent);animation:cue 2.2s ease-in-out infinite;transform-origin:top}
 @keyframes cue{0%{transform:scaleY(.15);opacity:0}50%{transform:scaleY(1);opacity:1}100%{opacity:0}}
@@ -185,6 +194,7 @@ body.listmode #stage,body.listmode #spacer,body.listmode #cue{display:none}
   </div>
  </div>
 </div>
+<p id="tap">Toca el sello para abrir</p>
 <p id="cue">Desliza para pasar la página</p>
 <div id="mlist"></div>
 <div id="order" role="region" aria-label="Pedido"><span class="sum"></span><button type="button" id="clear">Vaciar</button><a id="send" target="_blank" rel="noopener">Pedir por WhatsApp</a></div>
@@ -244,17 +254,18 @@ function paintOrder(){
  bar.querySelector('.sum').innerHTML=`<b>${n}</b> ${n===1?'producto':'productos'} · ${crc(total)}`;
  $('send').href=`https://wa.me/${WA_NUM}?text=`+encodeURIComponent('Hola, quisiera pedir:\n'+lines.join('\n')+'\nTotal: '+crc(total));
 }
-document.addEventListener('click',e=>{const b=e.target.closest('[data-item]');if(!b)return;const id=b.dataset.item;order[id]=(order[id]||0)+1;paintOrder();
+document.addEventListener('click',e=>{const b=e.target.closest('[data-item]');if(!b)return;const id=b.dataset.item;order[id]=(order[id]||0)+1;SND.pop();paintOrder();
  gsap.fromTo(b,{scale:.97},{scale:1,duration:.35,ease:'back.out(3)'})});
 $('clear').addEventListener('click',()=>{for(const k in order)delete order[k];paintOrder()});
 
 /* celular: páginas una debajo de otra */
-const LIST=[P.title,P.que,P.plate,P.evol,P.e1,P.e2,P.e3,P.e4,P.m1,P.m2,P.ct];
+const LIST=[P.m1,P.m2,P.ct,P.title,P.que,P.plate,P.evol,P.e1,P.e2,P.e3,P.e4];
 function mode(){
  if(!done)return;
  const list=innerWidth<820||innerWidth/innerHeight<.9;
  document.body.classList.toggle('listmode',list);
  if(list&&!$('mlist').children.length){$('mlist').innerHTML=LIST.map(p=>`<div class="sheet">${p.html}${dirt()}</div>`).join('');paintOrder()}
+ if(list){const ml=$('mlist'),f=ml.firstElementChild;ml.style.paddingTop=Math.max(28,(innerHeight-f.offsetHeight)/2)+'px'}
  ScrollTrigger.refresh();
 }
 
@@ -276,9 +287,11 @@ function build(){
  render();
  if(window.ScrollTrigger)ScrollTrigger.refresh();
 }
+const lastHalf=[];
 function render(){
  leaves.forEach((el,i)=>{
   const t=i===0?opened.t:sm(clamp((prog-(i-1)-.15)/.7));
+  const h=t>.5;if(i>0&&done&&lastHalf[i]!==undefined&&lastHalf[i]!==h&&window.SND)SND.page();lastHalf[i]=h;
   el.style.transform=`rotateY(${-180*t}deg)`;
   el.style.zIndex=t<.5?leaves.length-i:i+1;
   el.style.setProperty('--sh',(Math.sin(Math.PI*t)*.5).toFixed(3));
@@ -294,6 +307,33 @@ if('scrollRestoration' in history)history.scrollRestoration='manual';scrollTo(0,
 build();
 ScrollTrigger.create({trigger:spacer,start:'top top',end:'bottom bottom',onUpdate:s=>{prog=s.progress*flips;render();cue.style.visibility=prog>.03?'hidden':'visible'}});
 let rw;addEventListener('resize',()=>{clearTimeout(rw);rw=setTimeout(()=>{build();paintOrder();mode()},150)});
+
+/* SONIDO: todo sintetizado, suave */
+const SND=(()=>{let ctx,master,noise,muted=false;
+ function init(){if(ctx)return;const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;ctx=new AC();master=ctx.createGain();master.gain.value=.32;master.connect(ctx.destination);
+  noise=ctx.createBuffer(1,ctx.sampleRate*1.5,ctx.sampleRate);const d=noise.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1}
+ const ok=()=>ctx&&ctx.state==='running'&&!muted;
+ function env(g,t,a,peak,dec){g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(peak,t+a);g.gain.exponentialRampToValueAtTime(.0001,t+a+dec)}
+ function hiss({dur=.4,f1=800,f2=2500,q=.9,vol=.5,type='bandpass',delay=0}){if(!ok())return;const t=ctx.currentTime+delay,src=ctx.createBufferSource();src.buffer=noise;
+  const f=ctx.createBiquadFilter();f.type=type;f.Q.value=q;f.frequency.setValueAtTime(f1,t);f.frequency.exponentialRampToValueAtTime(f2,t+dur);
+  const g=ctx.createGain();env(g,t,dur*.35,vol,dur*.65);src.connect(f).connect(g).connect(master);src.start(t);src.stop(t+dur+.05)}
+ function tone({f=440,f2,dur=.2,vol=.3,type='sine',delay=0}){if(!ok())return;const t=ctx.currentTime+delay,o=ctx.createOscillator();o.type=type;o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+dur);
+  const g=ctx.createGain();env(g,t,.008,vol,dur);o.connect(g).connect(master);o.start(t);o.stop(t+dur+.05)}
+ return{
+  init,resume(){init();if(ctx&&ctx.state!=='running')ctx.resume();},get live(){return ok()},
+  toggle(){init();if(ctx.state!=='running'){ctx.resume();muted=false}else muted=!muted},
+  arrive(){hiss({dur:.6,f1:300,f2:900,vol:.25});tone({f:110,f2:60,dur:.25,vol:.25,delay:.45})},
+  crack(){[0,.05,.11].forEach(d=>hiss({dur:.07,f1:2500,f2:1800,q:2,vol:.6,delay:d}));tone({f:180,f2:90,dur:.12,vol:.18})},
+  flap(){hiss({dur:.35,f1:1200,f2:3200,vol:.3})},
+  slide(){hiss({dur:.8,f1:600,f2:1400,q:.7,vol:.28,type:'lowpass'})},
+  drop(){hiss({dur:.7,f1:900,f2:250,vol:.18})},
+  land(){tone({f:95,f2:48,dur:.3,vol:.45});hiss({dur:.18,f1:400,f2:200,vol:.2,type:'lowpass'});[0,.07,.15].forEach((d,i)=>tone({f:1760+i*440,dur:.5,vol:.035,delay:.08+d}))},
+  open(){hiss({dur:.55,f1:500,f2:1600,vol:.3});tone({f:120,f2:70,dur:.2,vol:.18,delay:.5})},
+  page(){hiss({dur:.32,f1:1500,f2:3500,vol:.22})},
+  pop(){tone({f:660,f2:990,dur:.12,vol:.12,type:'triangle'})}
+ }})();
+['pointerdown','keydown','touchstart'].forEach(ev=>addEventListener(ev,()=>SND.resume(),{passive:true}));
+try{SND.init()}catch(e){}
 
 /* INTRO: sobre horizontal con el libro acostado adentro */
 const stage=$('stage'),rig=$('rig');
@@ -336,9 +376,14 @@ tl.from([...envParts,'#bookc'],{y:'+='+innerHeight,rotation:'-=8',duration:1.1,e
  .to(opened,{t:1,duration:1.1,ease:'power2.inOut',onUpdate:render},'out+=2.3')
  .to(cue,{opacity:1,duration:.6},'-=.2');
 
+tl.call(()=>SND.arrive(),null,0).call(()=>SND.crack(),null,'crack').call(()=>SND.flap(),null,'crack+=.2').call(()=>SND.slide(),null,'out').call(()=>SND.drop(),null,'out+=.75').call(()=>SND.land(),null,'out+=1.9').call(()=>SND.open(),null,'out+=2.3');
+let waiting=false,idle;
+tl.addPause('crack',()=>{waiting=true;document.getElementById('tap').classList.add('show');idle=gsap.to('#seal',{scale:1.1,duration:.6,yoyo:true,repeat:-1,ease:'sine.inOut'})});
+function openSeal(){if(!waiting)return;waiting=false;SND.resume();idle&&idle.kill();gsap.to('#seal',{scale:1,duration:.1});document.getElementById('tap').classList.remove('show');setTimeout(()=>tl.play(),60)}
+addEventListener('pointerdown',openSeal);addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')openSeal()});
 function endIntro(){if(done)return;done=true;document.documentElement.classList.remove('lock');envParts.forEach(s=>$(s.slice(1)).remove());lenis.start();
  if(single){gsap.to('#stage',{opacity:0,duration:.5,onComplete:()=>{mode();scrollTo(0,0)}})}else mode()}
-const hurry=()=>{if(!done)tl.timeScale(4)};
+const hurry=()=>{if(!done&&!waiting&&tl.time()>tl.labels.crack+.3)tl.timeScale(3)};
 ['wheel','touchstart','keydown','pointerdown'].forEach(e=>addEventListener(e,hurry,{passive:true}));
 const Q=new URLSearchParams(location.search);
 if(Q.has('t')){tl.pause();tl.seek(+Q.get('t'))}
