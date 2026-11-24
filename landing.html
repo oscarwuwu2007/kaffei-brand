@@ -380,18 +380,19 @@ tl.from([...envParts,'#bookc'],{y:'+='+innerHeight,rotation:'-=8',duration:1.1,e
  .to(cue,{opacity:1,duration:.6},'-=.2');
 
 tl.call(()=>SND.arrive(),null,0).call(()=>SND.crack(),null,'crack').call(()=>SND.flap(),null,'crack+=.2').call(()=>SND.slide(),null,'out').call(()=>SND.drop(),null,'out+=.75').call(()=>SND.land(),null,'out+=1.9').call(()=>SND.open(),null,'out+=2.3');
-let waiting=false,tapped=false,noWait=false,released=false,idle;
+let waiting=false,tapped=false,noWait=false,released=false,idle,autoOpen;
 tl.call(()=>{
  if(noWait||released)return;
  tl.pause(tl.labels.crack,true);/* si el navegador se pasó del punto, vuelve y espera */
  if(tapped){tapped=false;released=true;setTimeout(()=>tl.play(),60);return}
  waiting=true;document.getElementById('tap').classList.add('show');
- idle=gsap.to('#seal',{scale:1.1,duration:.6,yoyo:true,repeat:-1,ease:'sine.inOut'})
+ idle=gsap.to('#seal',{scale:1.1,duration:.6,yoyo:true,repeat:-1,ease:'sine.inOut'});
+ autoOpen=setTimeout(openSeal,3000)/* si nadie toca, se abre solo */
 },null,'crack');
 function openSeal(){
  if(done)return;
  if(!waiting){tapped=true;return}/* tocó antes de llegar: abre apenas llegue */
- waiting=false;released=true;SND.resume();idle&&idle.kill();gsap.to('#seal',{scale:1,duration:.1});document.getElementById('tap').classList.remove('show');setTimeout(()=>tl.play(),60)}
+ clearTimeout(autoOpen);waiting=false;released=true;SND.resume();idle&&idle.kill();gsap.to('#seal',{scale:1,duration:.1});document.getElementById('tap').classList.remove('show');setTimeout(()=>tl.play(),60)}
 addEventListener('pointerdown',openSeal);addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')openSeal()});
 function endIntro(){if(done)return;done=true;document.documentElement.classList.remove('lock');envParts.forEach(s=>$(s.slice(1)).remove());lenis.start();
  if(single){gsap.to('#stage',{opacity:0,duration:.5,onComplete:()=>{mode();scrollTo(0,0)}})}else mode()}
