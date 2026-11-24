@@ -1,370 +1,183 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kaffei — Cómo se construye una casa de café</title>
-<meta name="description" content="Kaffei empieza con postres dulces y salados. Después viene el local, el restaurante y más sedes. Esta es la ruta.">
+<title>Kaffei — Café de especialidad · Costa Rica</title>
+<meta name="description" content="Kaffei. Café y repostería de especialidad en Costa Rica. Una experiencia, no un precio.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={theme:{extend:{
+ colors:{hueso:'#FAF3EA',crema:'#E4D3BE',cafe:'#5A3825',canela:'#8C5A3C',espresso:'#2B1B12',oro:'#A9834F'},
+ fontFamily:{serif:['"Cormorant Garamond"','Georgia','serif'],sans:['Inter','system-ui','sans-serif']}
+}}}
+</script>
 <style>
-:root{--hueso:#FAF3EA;--blanco:#FFF;--espresso:#2B1B12;--canela:#8C5A3C;--cafe:#5A3825;--bronce:#A9834F;--crema:#E4D3BE;
---serif:'Cormorant Garamond',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--w:1120px}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--hueso);color:var(--espresso);font-family:var(--sans);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
-img{display:block;max-width:100%}
-a{color:inherit;text-decoration:none}
-.wrap{max-width:var(--w);margin:0 auto;padding:0 28px}
-.lbl{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--bronce);font-weight:500}
-h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.02}
-h2{font-size:clamp(38px,5vw,60px);color:var(--cafe)}
-h2 em,h1 em{font-style:italic;color:var(--canela)}
-.btn{display:inline-block;padding:14px 28px;border:1px solid var(--bronce);color:var(--crema);font-size:13px;letter-spacing:.14em;text-transform:uppercase;transition:.3s}
-.btn:hover{background:var(--bronce);color:var(--espresso)}
-.btn.solid{background:var(--cafe);border-color:var(--cafe);color:var(--hueso)}
-.btn.solid:hover{background:var(--espresso);border-color:var(--espresso);color:var(--hueso)}
-
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:20;transition:.35s;color:var(--crema)}
-nav.on{background:rgba(43,27,18,.94);backdrop-filter:blur(8px);box-shadow:0 1px 0 rgba(169,131,79,.3)}
-nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px}
-nav img{height:26px;width:auto}
-nav ul{display:flex;gap:34px;list-style:none;font-size:12px;letter-spacing:.18em;text-transform:uppercase}
-nav ul a{opacity:.8;transition:.2s}nav ul a:hover{opacity:1;color:var(--bronce)}
-
-/* HERO */
-.hero{background:radial-gradient(90% 110% at 78% 20%,#4a2f1f 0%,#33211a 40%,var(--espresso) 75%);color:var(--crema);min-height:100vh;position:relative;overflow:hidden;display:flex;align-items:center}
-.hero .anillo{position:absolute;border-radius:50%;border:1px solid rgba(169,131,79,.22)}
-.hero .a1{width:640px;height:640px;left:-220px;top:-260px}
-.hero .a2{width:460px;height:460px;left:-120px;top:-170px}
-.hero .civ{position:absolute;right:-30px;top:58%;transform:translateY(-50%);width:min(620px,48vw);opacity:.95}
-.hero .wrap{position:relative;z-index:2;padding-top:90px;width:100%}
-.hero h1{font-size:clamp(54px,9vw,128px);letter-spacing:-.02em;line-height:.92;margin:22px 0 28px}
-.hero h1 em{color:var(--bronce)}
-.hero p{max-width:480px;font-size:18px;opacity:.85;margin-bottom:38px}
-.hero .linea{position:absolute;left:28px;right:28px;bottom:36px;height:1px;background:var(--bronce);opacity:.45}
-.scroll{position:absolute;bottom:50px;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:.3em;text-transform:uppercase;opacity:.55}
-
-/* PREMISA */
-.premisa{padding:140px 0 120px;text-align:center}
-.premisa p.big{font-family:var(--serif);font-size:clamp(28px,3.6vw,46px);line-height:1.2;color:var(--cafe);max-width:860px;margin:26px auto 0}
-.premisa p.big em{color:var(--canela)}
-.pilares{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--crema);margin-top:90px;border:1px solid var(--crema)}
-.pilares div{background:var(--hueso);padding:38px 30px;text-align:left}
-.pilares b{font-family:var(--serif);font-weight:600;font-size:26px;color:var(--cafe);display:block;margin-bottom:6px}
-.pilares span{font-size:15px;color:var(--canela)}
-
-/* RUTA */
-.ruta{background:var(--espresso);color:var(--crema);padding:110px 0 40px;position:relative}
-.ruta header{text-align:center;margin-bottom:70px}
-.ruta h2{color:var(--hueso)}
-.ruta h2 em{color:var(--bronce)}
-.ruta header p{max-width:560px;margin:20px auto 0;opacity:.75}
-.mapa{display:flex;justify-content:space-between;position:relative;max-width:880px;margin:0 auto 20px;padding:0 10px}
-.mapa::before{content:"";position:absolute;left:60px;right:60px;top:27px;height:1px;background:rgba(169,131,79,.4)}
-.mapa .fill{position:absolute;left:60px;top:27px;height:1px;background:var(--bronce);width:0;transition:width 1s .3s}
-.mapa.in .fill{width:calc((100% - 120px)/3 * .5)}
-.mapa a{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:12px;width:120px;text-align:center}
-.mapa i{width:55px;height:55px;border-radius:50%;border:1px solid var(--bronce);background:var(--espresso);display:grid;place-items:center;font:500 22px var(--serif);font-style:normal;color:var(--bronce)}
-.mapa a.now i{background:var(--bronce);color:var(--espresso)}
-.mapa small{font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.7}
-.mapa b{font:600 18px var(--serif);color:var(--hueso)}
-
-/* ETAPAS */
-.etapa{padding:110px 0;position:relative}
-.etapa.oscura{background:var(--espresso);color:var(--crema)}
-.etapa.cafe{background:var(--cafe);color:var(--crema)}
-.etapa.clara{background:var(--hueso);color:var(--espresso)}
-.etapa.crema{background:var(--crema);color:var(--espresso)}
-.et-head{display:flex;align-items:center;gap:22px;margin-bottom:56px}
-.et-num{font:500 110px/0.8 var(--serif);color:var(--bronce);opacity:.9}
-.et-head .lbl{display:block;margin-bottom:8px}
-.etapa h2{color:inherit}
-.etapa.clara h2,.etapa.crema h2{color:var(--cafe)}
-.estado{display:inline-block;margin-top:14px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;padding:6px 14px;border:1px solid var(--bronce);color:var(--bronce)}
-.estado.vivo{background:var(--bronce);color:var(--espresso)}
-.et-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
-.et-grid .txt p{font-size:17px;opacity:.88;margin-bottom:18px;max-width:480px}
-.et-grid .txt .lead{font-family:var(--serif);font-size:28px;line-height:1.2;opacity:1;margin-bottom:22px}
-.foto{position:relative;overflow:hidden;aspect-ratio:1/1;background:var(--crema)}
-.foto img{width:100%;height:100%;object-fit:cover}
-.foto::after{content:"";position:absolute;inset:14px;border:1px solid rgba(250,243,234,.55);pointer-events:none}
-.iconos{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:34px 0 8px}
-.ico{display:flex;gap:14px;align-items:center;padding:16px 18px;border:1px solid rgba(169,131,79,.45)}
-.ico svg{width:38px;height:38px;flex:none;stroke:var(--bronce);fill:none;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
-.ico b{font:600 18px var(--serif);display:block;line-height:1.1}
-.ico span{font-size:13px;opacity:.7}
-
-/* MENU */
-.menu{margin-top:70px;background:var(--hueso);color:var(--espresso);padding:46px 44px 40px;position:relative}
-.etapa.clara .menu{background:var(--blanco);outline:1px solid var(--crema)}
-.menu-top{display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:16px;border-bottom:1px solid var(--crema);padding-bottom:20px;margin-bottom:8px}
-.menu-top h3{font-size:40px;color:var(--cafe)}
-.tabs{display:flex;gap:6px}
-.tabs button{font:500 12px var(--sans);letter-spacing:.16em;text-transform:uppercase;background:none;border:1px solid var(--crema);padding:10px 20px;color:var(--canela);cursor:pointer;transition:.2s}
-.tabs button.on{background:var(--cafe);color:var(--hueso);border-color:var(--cafe)}
-.lista{display:none;grid-template-columns:1fr 1fr;column-gap:56px}
-.lista.on{display:grid}
-.it{padding:20px 0;border-bottom:1px solid var(--crema)}
-.it .row{display:flex;align-items:baseline;gap:12px}
-.it b{font:600 22px var(--serif);color:var(--cafe)}
-.it .dots{flex:1;border-bottom:1px dotted var(--bronce);transform:translateY(-4px);opacity:.6}
-.it .pr{font:500 15px var(--sans);color:var(--canela)}
-.it p{font-size:14px;color:var(--canela);margin-top:2px;max-width:420px}
-.menu .nota{font-size:12px;color:var(--bronce);margin-top:22px;letter-spacing:.04em}
-.tent .it .pr{font-style:italic;font-family:var(--serif);font-size:16px}
-.canales{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:70px}
-.canal{border:1px solid rgba(169,131,79,.45);padding:34px 32px;display:flex;gap:24px;align-items:flex-start}
-.canal svg{width:56px;height:56px;flex:none;stroke:var(--bronce);fill:none;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
-.canal h3{font-size:30px;color:var(--hueso);margin-bottom:6px}
-.canal p{font-size:15px;opacity:.75}
-
-/* futuras */
-.vis{aspect-ratio:1/1;display:grid;place-items:center;position:relative;overflow:hidden}
-.vis .civ{width:78%;opacity:.95}
-.vis.mapacard{background:var(--cafe)}
-.puntos{position:absolute;inset:0}
-.puntos span{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--bronce)}
-.puntos span::after{content:"";position:absolute;inset:-9px;border-radius:50%;border:1px solid rgba(169,131,79,.5)}
-.puntos svg{position:absolute;inset:0;width:100%;height:100%}
-
-/* CIERRE */
-.cierre{background:var(--espresso);color:var(--crema);text-align:center;padding:130px 0 70px}
-.cierre img.k{height:84px;margin:0 auto 34px}
-.cierre h2{color:var(--hueso);max-width:760px;margin:0 auto 24px}
-.cierre h2 em{color:var(--bronce)}
-.cierre p{max-width:480px;margin:0 auto 38px;opacity:.75}
-.cierre .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-.cierre .btn.solid{background:var(--bronce);border-color:var(--bronce);color:var(--espresso)}
-.cierre .btn.solid:hover{background:var(--crema);border-color:var(--crema)}
-footer{margin-top:110px;padding-top:26px;border-top:1px solid rgba(169,131,79,.35);display:flex;justify-content:space-between;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.55}
-
-/* reveal */
-.rv{opacity:0;transform:translateY(26px);transition:opacity .9s,transform .9s}
-.rv.in{opacity:1;transform:none}
-
-@media(max-width:860px){
- nav ul{display:none}
- .hero .civ{width:120vw;right:-30vw;top:32%;opacity:.35}
- .pilares,.et-grid,.canales,.iconos,.lista{grid-template-columns:1fr}
- .et-grid{gap:40px}.et-num{font-size:78px}
- .menu{padding:30px 22px}
- .mapa{padding:0}.mapa::before{left:45px;right:45px}.mapa a{width:80px}.mapa small{font-size:9px}.mapa b{font-size:15px}
- .mapa .fill{left:45px}
- footer{flex-direction:column;gap:8px;align-items:center}
-}
-@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+ body{-webkit-font-smoothing:antialiased}
+ .rv{opacity:0;transform:translateY(30px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
+ .rv.in{opacity:1;transform:none}
+ .d1{transition-delay:.12s}.d2{transition-delay:.24s}.d3{transition-delay:.36s}
+ .zoom img{transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}.zoom:hover img{transform:scale(1.04)}
+ @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
 </style>
 </head>
-<body>
+<body class="bg-white text-espresso font-sans">
 
-<nav id="nav"><div class="wrap">
- <a href="#top"><img src="assets/lockup-cafe.png" alt="Kaffei" id="navlogo" style="filter:brightness(0) invert(.9) sepia(.2)"></a>
- <ul><li><a href="#ruta">La ruta</a></li><li><a href="#etapa1">Hoy</a></li><li><a href="#etapa2">El local</a></li><li><a href="#contacto">Contacto</a></li></ul>
-</div></nav>
-
-<!-- HERO -->
-<header class="hero" id="top">
- <div class="anillo a1"></div><div class="anillo a2"></div>
- <img class="civ" src="assets/civeta-crema.png" alt="">
- <div class="wrap">
-  <span class="lbl">Costa Rica · Cafetería de especialidad</span>
-  <h1>Kaffei,<br><em>paso a paso.</em></h1>
-  <p>Una casa de café que se construye con calma. Empezamos por el postre. Esta es la ruta completa.</p>
-  <a class="btn" href="#ruta">Ver la ruta</a>
+<!-- NAV -->
+<header id="nav" class="fixed inset-x-0 top-0 z-50 transition-all duration-500">
+ <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+  <a href="#inicio"><img src="assets/lockup-cafe.png" alt="Kaffei" class="h-6 w-auto"></a>
+  <nav class="hidden items-center gap-10 text-[13px] text-cafe md:flex">
+   <a href="#kaffei" class="transition hover:text-espresso">Kaffei</a>
+   <a href="#evolucion" class="transition hover:text-espresso">Evolución</a>
+   <a href="#menu" class="transition hover:text-espresso">Menú</a>
+   <a href="#contacto" class="transition hover:text-espresso">Contacto</a>
+  </nav>
+  <a href="#contacto" class="rounded-full bg-oro px-5 py-2 text-[13px] font-medium text-espresso transition hover:bg-cafe hover:text-hueso">Pedir</a>
  </div>
- <span class="scroll">Desplace</span>
- <div class="linea"></div>
 </header>
 
-<!-- PREMISA -->
-<section class="premisa"><div class="wrap">
- <span class="lbl rv">Lo que representamos</span>
- <p class="big rv">Competimos por la experiencia, el producto y la presentación. <em>Nunca por precio.</em></p>
- <div class="pilares rv">
-  <div><b>Experiencia</b><span>Cada visita se siente quieta, cuidada y sin prisa.</span></div>
-  <div><b>Producto</b><span>Un estándar que se nota en la taza y en el plato.</span></div>
-  <div><b>Presentación</b><span>El vaso, la caja y el menú están pensados.</span></div>
+<!-- HERO -->
+<section id="inicio" class="bg-white pb-24 pt-32 text-center">
+ <div class="mx-auto max-w-5xl px-6">
+  <p class="rv text-[13px] uppercase tracking-[.3em] text-canela">Costa Rica</p>
+  <h1 class="rv d1 mt-6 font-serif text-[clamp(56px,10vw,132px)] font-medium leading-[.95] tracking-tight text-espresso">El café,<br><em class="text-canela">sin prisa.</em></h1>
+  <p class="rv d2 mx-auto mt-8 max-w-md text-lg text-cafe/80">Café y repostería de especialidad, hechos con el cuidado que usted nota en la primera taza.</p>
+  <div class="rv d3 mt-10 flex items-center justify-center gap-8">
+   <a href="#menu" class="rounded-full bg-oro px-8 py-3.5 text-sm font-medium text-espresso transition hover:bg-cafe hover:text-hueso">Ver el menú</a>
+   <a href="#evolucion" class="text-sm text-cafe transition hover:text-espresso">Nuestra evolución ›</a>
+  </div>
  </div>
-</div></section>
+ <div class="rv d3 mx-auto mt-16 max-w-5xl px-6">
+  <div class="overflow-hidden rounded-3xl bg-[#efeeec]"><img src="assets/fotos/taza-latte.jpg" alt="Latte Kaffei" class="mx-auto aspect-[16/10] w-full object-cover object-[50%_58%]"></div>
+ </div>
+</section>
 
-<!-- RUTA -->
-<section class="ruta" id="ruta">
- <div class="wrap">
-  <header class="rv">
-   <span class="lbl">La ruta</span>
-   <h2 style="margin-top:14px">Cuatro etapas. <em>Un solo estándar.</em></h2>
-   <p>Cada etapa conserva lo que la anterior hizo bien y agrega un espacio nuevo. La marca no cambia al crecer.</p>
-  </header>
-  <div class="mapa rv" id="mapa">
-   <div class="fill"></div>
-   <a href="#etapa1" class="now"><i>I</i><small>Hoy</small><b>Postres</b></a>
-   <a href="#etapa2"><i>II</i><small>Siguiente</small><b>El local</b></a>
-   <a href="#etapa3"><i>III</i><small>Después</small><b>Restaurante</b></a>
-   <a href="#etapa4"><i>IV</i><small>Luego</small><b>Varias sedes</b></a>
+<!-- QUÉ ES KAFFEI -->
+<section id="kaffei" class="bg-hueso py-32 md:py-44">
+ <div class="mx-auto max-w-4xl px-6 text-center">
+  <p class="rv text-[13px] uppercase tracking-[.3em] text-canela">Qué es Kaffei</p>
+  <h2 class="rv d1 mt-8 font-serif text-[clamp(40px,6.4vw,84px)] font-medium leading-[1.02] text-espresso">No competimos por precio.<br><em class="text-canela">Competimos por lo que se siente.</em></h2>
+  <p class="rv d2 mx-auto mt-10 max-w-xl text-lg leading-relaxed text-cafe/80">Kaffei es una casa de café de especialidad. Cada producto se piensa para que la visita sea quieta, cuidada y sin prisa. Por eso es una experiencia, y por eso no es un café barato.</p>
+ </div>
+ <div class="mx-auto mt-24 grid max-w-5xl gap-px bg-crema px-0 md:grid-cols-3 md:rounded-sm">
+  <div class="rv bg-hueso px-8 py-10 text-center"><p class="font-serif text-3xl text-cafe">Experiencia</p><p class="mt-3 text-sm leading-relaxed text-cafe/70">Cada visita se siente tranquila y atendida.</p></div>
+  <div class="rv d1 bg-hueso px-8 py-10 text-center"><p class="font-serif text-3xl text-cafe">Producto</p><p class="mt-3 text-sm leading-relaxed text-cafe/70">Un estándar que se nota en la taza y en el plato.</p></div>
+  <div class="rv d2 bg-hueso px-8 py-10 text-center"><p class="font-serif text-3xl text-cafe">Presentación</p><p class="mt-3 text-sm leading-relaxed text-cafe/70">El vaso, la caja y el menú están pensados.</p></div>
+ </div>
+ <div class="rv mx-auto mt-24 max-w-6xl px-6">
+  <div class="zoom overflow-hidden rounded-2xl"><img src="assets/fotos/vaso-cafe.jpg" alt="Café Kaffei para llevar y en taza" class="aspect-[16/8] w-full object-cover" loading="lazy"></div>
+ </div>
+</section>
+
+<!-- EVOLUCIÓN -->
+<section id="evolucion" class="bg-espresso py-32 text-crema md:py-44">
+ <div class="mx-auto max-w-6xl px-6">
+  <div class="mx-auto max-w-3xl text-center">
+   <p class="rv text-[13px] uppercase tracking-[.3em] text-oro">Nuestra evolución</p>
+   <h2 class="rv d1 mt-8 font-serif text-[clamp(40px,6.4vw,84px)] font-medium leading-[1.02] text-hueso">Cuatro etapas.<br><em class="text-crema/60">Un solo estándar.</em></h2>
+   <p class="rv d2 mx-auto mt-8 max-w-lg text-lg text-crema/65">Empezamos pequeños, a propósito. Cada paso conserva lo que el anterior hizo bien.</p>
+  </div>
+
+  <div class="relative mt-24">
+   <div class="absolute left-0 right-0 top-[7px] hidden h-px bg-crema/20 lg:block"></div>
+   <div class="absolute left-0 top-[7px] hidden h-px w-[12.5%] bg-crema lg:block"></div>
+   <div class="grid gap-16 lg:grid-cols-4 lg:gap-8">
+
+    <article class="rv">
+     <div class="hidden h-[15px] w-[15px] rounded-full bg-crema lg:block"></div>
+     <svg viewBox="0 0 64 64" class="mt-0 h-16 w-16 fill-none stroke-crema stroke-[1.2] lg:mt-12" stroke-linecap="round" stroke-linejoin="round"><path d="M8 18h30v26H8zM38 26h10l8 9v9H38z"/><circle cx="19" cy="48" r="5"/><circle cx="46" cy="48" r="5"/></svg>
+     <p class="mt-8 font-serif text-5xl text-oro/90">01</p>
+     <h3 class="mt-2 font-serif text-3xl text-hueso">Ferias y 100% virtual</h3>
+     <p class="mt-3 text-[15px] leading-relaxed text-crema/65">Postres dulces y salados. Se venden en ferias y por pedido a domicilio, sin local.</p>
+     <p class="mt-5 inline-block rounded-full border border-crema/50 px-3 py-1 text-[11px] uppercase tracking-[.2em] text-crema">Hoy</p>
+    </article>
+
+    <article class="rv d1">
+     <div class="hidden h-[15px] w-[15px] rounded-full border border-crema/60 bg-espresso lg:block"></div>
+     <svg viewBox="0 0 64 64" class="h-16 w-16 fill-none stroke-crema/80 stroke-[1.2] lg:mt-12" stroke-linecap="round" stroke-linejoin="round"><path d="M6 24 32 8l26 16M10 24v8a7 7 0 0 0 14 0 7 7 0 0 0 16 0 7 7 0 0 0 14 0v-8M14 38v18h36V38M27 56V43h10v13"/></svg>
+     <p class="mt-8 font-serif text-5xl text-crema/30">02</p>
+     <h3 class="mt-2 font-serif text-3xl text-hueso/90">Mini tienda</h3>
+     <p class="mt-3 text-[15px] leading-relaxed text-crema/55">Un local pequeño y propio. Se suma el café de especialidad y un lugar donde quedarse.</p>
+     <p class="mt-5 inline-block text-[11px] uppercase tracking-[.2em] text-crema/45">Siguiente</p>
+    </article>
+
+    <article class="rv d2">
+     <div class="hidden h-[15px] w-[15px] rounded-full border border-crema/40 bg-espresso lg:block"></div>
+     <svg viewBox="0 0 64 64" class="h-16 w-16 fill-none stroke-crema/60 stroke-[1.2] lg:mt-12" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6v18M12 6v13a8 8 0 0 0 16 0V6M20 24v34M46 58V6c-9 5-11 16-11 26h11"/></svg>
+     <p class="mt-8 font-serif text-5xl text-crema/20">03</p>
+     <h3 class="mt-2 font-serif text-3xl text-hueso/75">Restaurante y cafetería</h3>
+     <p class="mt-3 text-[15px] leading-relaxed text-crema/45">Un espacio de mayor formato, con cocina propia, desayunos, brunch y almuerzos.</p>
+     <p class="mt-5 inline-block text-[11px] uppercase tracking-[.2em] text-crema/35">Después</p>
+    </article>
+
+    <article class="rv d3">
+     <div class="hidden h-[15px] w-[15px] rounded-full border border-oro bg-espresso shadow-[0_0_0_5px_rgba(169,131,79,.18)] lg:block"></div>
+     <svg viewBox="0 0 64 64" class="h-16 w-16 fill-none stroke-oro stroke-[1.2] lg:mt-12" stroke-linecap="round" stroke-linejoin="round"><path d="M32 58s17-15 17-28a17 17 0 0 0-34 0c0 13 17 28 17 28z"/><circle cx="32" cy="30" r="6"/></svg>
+     <p class="mt-8 font-serif text-5xl text-oro">04</p>
+     <h3 class="mt-2 font-serif text-3xl text-hueso">Varias sedes</h3>
+     <p class="mt-3 text-[15px] leading-relaxed text-crema/65">La meta: la misma casa en más lugares, con el mismo estándar en cada una.</p>
+     <p class="mt-5 inline-block rounded-full border border-oro px-3 py-1 text-[11px] uppercase tracking-[.2em] text-oro">La meta</p>
+    </article>
+
+   </div>
   </div>
  </div>
 </section>
 
-<!-- ETAPA 1 -->
-<section class="etapa oscura" id="etapa1" style="padding-top:60px"><div class="wrap">
- <div class="et-head rv">
-  <div class="et-num">I</div>
-  <div><span class="lbl">Etapa uno</span><h2>Postres dulces y salados</h2><span class="estado vivo">En marcha</span></div>
- </div>
- <div class="et-grid">
-  <div class="txt rv">
-   <p class="lead">Empezamos por lo esencial: hacer muy bien pocos productos.</p>
-   <p>Postres dulces y salados, hechos en pequeñas tandas y entregados en una caja que ya dice quiénes somos. Sin local, sin intermediarios: del horno a su mesa.</p>
-   <div class="iconos">
-    <div class="ico"><svg viewBox="0 0 40 40"><path d="M5 12h20v16H5zM25 18h6l4 5v5H25z"/><circle cx="12" cy="30" r="3"/><circle cx="30" cy="30" r="3"/></svg><div><b>Envíos</b><span>A domicilio, por pedido</span></div></div>
-    <div class="ico"><svg viewBox="0 0 40 40"><path d="M4 16 20 6l16 10M7 16v4a4 4 0 0 0 8 0 4 4 0 0 0 8 0 4 4 0 0 0 8 0v-4M9 24v10h22V24"/></svg><div><b>Ferias</b><span>Donde nos puedan probar</span></div></div>
-   </div>
+<!-- MENÚ -->
+<section id="menu" class="bg-hueso py-32 md:py-44">
+ <div class="mx-auto max-w-6xl px-6">
+  <div class="mx-auto max-w-3xl text-center">
+   <p class="rv text-[13px] uppercase tracking-[.3em] text-canela">Menú</p>
+   <h2 class="rv d1 mt-8 font-serif text-[clamp(40px,6.4vw,84px)] font-medium leading-[1.02] text-espresso">Pocos productos.<br><em class="text-canela">Bien hechos.</em></h2>
   </div>
-  <div class="foto rv"><img src="assets/fotos/caja-postres.jpg" alt="Caja de postres Kaffei" loading="lazy"></div>
- </div>
 
- <div class="menu rv" id="menu1">
-  <div class="menu-top">
-   <h3>Menú · Etapa I</h3>
-   <div class="tabs"><button class="on" data-t="dulce">Dulces</button><button data-t="salado">Salados</button></div>
+  <div class="mt-20 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+   <article class="rv zoom group overflow-hidden rounded-2xl bg-white shadow-[0_1px_0_#E4D3BE]"><div class="overflow-hidden"><img src="assets/fotos/taza-latte.jpg" alt="Latte" class="aspect-square w-full object-cover" loading="lazy"></div><div class="p-7"><div class="flex items-baseline justify-between gap-4"><h3 class="font-serif text-[28px] leading-none text-espresso">Latte Kaffei</h3><p class="shrink-0 text-[15px] font-medium text-cafe">₡3 200</p></div><p class="mt-3 text-sm text-cafe/70">Espresso de especialidad y leche texturizada.</p></div></article>
+   <article class="rv d1 zoom group overflow-hidden rounded-2xl bg-white shadow-[0_1px_0_#E4D3BE]"><div class="overflow-hidden"><img src="assets/fotos/menu-croissant.jpg" alt="Croissant" class="aspect-square w-full object-cover" loading="lazy"></div><div class="p-7"><div class="flex items-baseline justify-between gap-4"><h3 class="font-serif text-[28px] leading-none text-espresso">Croissant</h3><p class="shrink-0 text-[15px] font-medium text-cafe">₡3 800</p></div><p class="mt-3 text-sm text-cafe/70">Mantequilla, laminado a mano.</p></div></article>
+   <article class="rv d2 zoom group overflow-hidden rounded-2xl bg-white shadow-[0_1px_0_#E4D3BE]"><div class="overflow-hidden"><img src="assets/fotos/torta.jpg" alt="Torta de chocolate" class="aspect-square w-full object-cover object-[50%_65%]" loading="lazy"></div><div class="p-7"><div class="flex items-baseline justify-between gap-4"><h3 class="font-serif text-[28px] leading-none text-espresso">Torta de chocolate</h3><p class="shrink-0 text-[15px] font-medium text-cafe">₡6 500</p></div><p class="mt-3 text-sm text-cafe/70">Ganache oscuro y hoja de oro.</p></div></article>
+   <article class="rv zoom group overflow-hidden rounded-2xl bg-white shadow-[0_1px_0_#E4D3BE]"><div class="overflow-hidden"><img src="assets/fotos/menu-tarta-limon.jpg" alt="Tarta de limón" class="aspect-square w-full object-cover" loading="lazy"></div><div class="p-7"><div class="flex items-baseline justify-between gap-4"><h3 class="font-serif text-[28px] leading-none text-espresso">Tarta de limón</h3><p class="shrink-0 text-[15px] font-medium text-cafe">₡5 200</p></div><p class="mt-3 text-sm text-cafe/70">Crema cítrica sobre masa quebrada.</p></div></article>
+   <article class="rv d1 zoom group overflow-hidden rounded-2xl bg-white shadow-[0_1px_0_#E4D3BE]"><div class="overflow-hidden"><img src="assets/fotos/menu-tarta-cacao.jpg" alt="Tarta de cacao" class="aspect-square w-full object-cover" loading="lazy"></div><div class="p-7"><div class="flex items-baseline justify-between gap-4"><h3 class="font-serif text-[28px] leading-none text-espresso">Tarta de cacao</h3><p class="shrink-0 text-[15px] font-medium text-cafe">₡5 500</p></div><p class="mt-3 text-sm text-cafe/70">Cacao de origen, textura sedosa.</p></div></article>
+   <article class="rv d2 zoom group overflow-hidden rounded-2xl bg-white shadow-[0_1px_0_#E4D3BE]"><div class="overflow-hidden"><img src="assets/fotos/menu-rollo.jpg" alt="Rollo de canela" class="aspect-square w-full object-cover" loading="lazy"></div><div class="p-7"><div class="flex items-baseline justify-between gap-4"><h3 class="font-serif text-[28px] leading-none text-espresso">Rollo de canela</h3><p class="shrink-0 text-[15px] font-medium text-cafe">₡4 200</p></div><p class="mt-3 text-sm text-cafe/70">Masa suave, canela y glaseado ligero.</p></div></article>
   </div>
-  <div class="lista on" data-l="dulce">
-   <div class="it"><div class="row"><b>Croissant de mantequilla</b><span class="dots"></span><span class="pr">₡2 500</span></div><p>Laminado a mano, mantequilla y horno lento.</p></div>
-   <div class="it"><div class="row"><b>Pain au chocolat</b><span class="dots"></span><span class="pr">₡2 900</span></div><p>Chocolate amargo, hojaldre dorado.</p></div>
-   <div class="it"><div class="row"><b>Tarta de limón</b><span class="dots"></span><span class="pr">₡3 800</span></div><p>Base de galleta, crema de limón y merengue.</p></div>
-   <div class="it"><div class="row"><b>Torta de café</b><span class="dots"></span><span class="pr">₡3 600</span></div><p>Bizcocho húmedo con café de especialidad.</p></div>
-   <div class="it"><div class="row"><b>Brownie de cacao</b><span class="dots"></span><span class="pr">₡2 400</span></div><p>Cacao de origen, centro suave.</p></div>
-   <div class="it"><div class="row"><b>Caja de cuatro</b><span class="dots"></span><span class="pr">₡9 800</span></div><p>Selección del día, en caja Kaffei.</p></div>
-  </div>
-  <div class="lista" data-l="salado">
-   <div class="it"><div class="row"><b>Quiche de queso y espinaca</b><span class="dots"></span><span class="pr">₡3 900</span></div><p>Masa quebrada, huevo y queso madurado.</p></div>
-   <div class="it"><div class="row"><b>Croissant de jamón y queso</b><span class="dots"></span><span class="pr">₡3 500</span></div><p>Hojaldre relleno, gratinado al servir.</p></div>
-   <div class="it"><div class="row"><b>Empanada de hongos</b><span class="dots"></span><span class="pr">₡2 800</span></div><p>Hongos salteados y tomillo.</p></div>
-   <div class="it"><div class="row"><b>Focaccia de romero</b><span class="dots"></span><span class="pr">₡3 200</span></div><p>Aceite de oliva y sal en escamas.</p></div>
-   <div class="it"><div class="row"><b>Tartaleta de tomate</b><span class="dots"></span><span class="pr">₡3 600</span></div><p>Tomate asado, queso crema y albahaca.</p></div>
-   <div class="it"><div class="row"><b>Caja de cuatro</b><span class="dots"></span><span class="pr">₡11 500</span></div><p>Selección salada, en caja Kaffei.</p></div>
-  </div>
-  <p class="nota">Menú de ejemplo. Los productos y precios definitivos se publican antes de cada entrega o feria.</p>
+  <p class="rv mt-10 text-center text-xs text-canela/80">Menú de ejemplo. Los productos y precios definitivos se confirman antes de cada pedido o feria.</p>
+  <div class="rv mt-12 text-center"><a href="#contacto" class="inline-block rounded-full bg-oro px-9 py-4 text-sm font-medium text-espresso transition hover:bg-cafe hover:text-hueso">Hacer un pedido</a></div>
  </div>
+</section>
 
- <div class="canales">
-  <div class="canal rv"><svg viewBox="0 0 56 56"><path d="M8 18h26v22H8zM34 26h9l6 7v7H34z"/><circle cx="17" cy="42" r="4"/><circle cx="42" cy="42" r="4"/></svg><div><h3>Por envío</h3><p>Pida por WhatsApp con un día de anticipación. Cada pedido llega en su caja, con la civeta en la tapa.</p></div></div>
-  <div class="canal rv"><svg viewBox="0 0 56 56"><path d="M6 22 28 8l22 14M10 22v6a6 6 0 0 0 12 0 6 6 0 0 0 12 0 6 6 0 0 0 12 0v-6M13 34v14h30V34"/></svg><div><h3>En ferias</h3><p>Nos encuentra en ferias y mercados de especialidad. Anunciamos cada fecha en Instagram.</p></div></div>
+<!-- CONTACTO -->
+<section id="contacto" class="bg-cafe py-32 text-crema md:py-44">
+ <div class="mx-auto grid max-w-6xl items-center gap-16 px-6 lg:grid-cols-2 lg:gap-24">
+  <div>
+   <p class="rv text-[13px] uppercase tracking-[.3em] text-crema/60">Contacto y pedidos</p>
+   <h2 class="rv d1 mt-8 font-serif text-[clamp(40px,6vw,76px)] font-medium leading-[1.02] text-hueso">Por ahora, <em class="text-crema/65">a su puerta.</em></h2>
+   <p class="rv d2 mt-8 max-w-md text-lg leading-relaxed text-crema/75">Todavía no tenemos local. Hoy nos encuentra en ferias y llevamos cada pedido a domicilio. El local viene después.</p>
+   <dl class="rv d2 mt-12 space-y-6 border-t border-crema/20 pt-8 text-[15px]">
+    <div class="flex gap-8"><dt class="w-28 shrink-0 text-crema/50">Ubicación</dt><dd>Próximamente. Hoy, 100% virtual y ferias.</dd></div>
+    <div class="flex gap-8"><dt class="w-28 shrink-0 text-crema/50">Instagram</dt><dd><a href="https://instagram.com/kaffei" target="_blank" rel="noopener" class="underline decoration-crema/30 underline-offset-4 hover:decoration-crema">@kaffei</a></dd></div>
+    <div class="flex gap-8"><dt class="w-28 shrink-0 text-crema/50">WhatsApp</dt><dd>Pedidos con un día de anticipación.</dd></div>
+   </dl>
+   <div class="rv d3 mt-12"><a href="https://wa.me/50600000000?text=Hola%2C%20quisiera%20hacer%20un%20pedido%20de%20Kaffei." target="_blank" rel="noopener" class="inline-block rounded-full bg-oro px-9 py-4 text-sm font-medium text-espresso transition hover:bg-hueso">Pedir por WhatsApp</a></div>
+  </div>
+  <div class="rv zoom overflow-hidden rounded-2xl"><img src="assets/fotos/fachada.jpg" alt="El local Kaffei, próximamente" class="aspect-[4/5] w-full object-cover" loading="lazy"></div>
  </div>
-</div></section>
+</section>
 
-<!-- ETAPA 2 -->
-<section class="etapa clara" id="etapa2"><div class="wrap">
- <div class="et-head rv">
-  <div class="et-num">II</div>
-  <div><span class="lbl">Etapa dos</span><h2>El local</h2><span class="estado">Próxima etapa</span></div>
- </div>
- <div class="et-grid">
-  <div class="foto rv"><img src="assets/fotos/fachada.jpg" alt="Fachada del local Kaffei" loading="lazy"></div>
-  <div class="txt rv">
-   <p class="lead">Un lugar físico donde la experiencia se completa.</p>
-   <p>El local suma el café de especialidad a los postres. Un espacio pequeño, tranquilo, donde se llega a quedarse un rato.</p>
-   <div class="iconos">
-    <div class="ico"><svg viewBox="0 0 40 40"><path d="M8 14h20v12a8 8 0 0 1-8 8h-4a8 8 0 0 1-8-8zM28 17h3a4 4 0 0 1 0 8h-3M14 5c-2 2 2 3 0 5M20 5c-2 2 2 3 0 5"/></svg><div><b>Café de especialidad</b><span>Barra y espresso</span></div></div>
-    <div class="ico"><svg viewBox="0 0 40 40"><path d="M4 16 20 6l16 10M7 16v4a4 4 0 0 0 8 0 4 4 0 0 0 8 0 4 4 0 0 0 8 0v-4M9 24v10h22V24M17 34v-7h6v7"/></svg><div><b>Local propio</b><span>Mesas y mostrador</span></div></div>
-   </div>
-  </div>
- </div>
- <div class="menu tent rv">
-  <div class="menu-top"><h3>Menú · Etapa II</h3><span class="lbl">Propuesta</span></div>
-  <div class="lista on">
-   <div class="it"><div class="row"><b>Espresso</b><span class="dots"></span><span class="pr">Próximamente</span></div><p>Café de origen costarricense.</p></div>
-   <div class="it"><div class="row"><b>Latte</b><span class="dots"></span><span class="pr">Próximamente</span></div><p>Leche texturizada, sin prisa.</p></div>
-   <div class="it"><div class="row"><b>Filtrado de temporada</b><span class="dots"></span><span class="pr">Próximamente</span></div><p>Un café distinto cada mes.</p></div>
-   <div class="it"><div class="row"><b>Todos los postres de la etapa I</b><span class="dots"></span><span class="pr">Próximamente</span></div><p>Dulces y salados, recién horneados.</p></div>
-  </div>
- </div>
-</div></section>
-
-<!-- ETAPA 3 -->
-<section class="etapa cafe" id="etapa3"><div class="wrap">
- <div class="et-head rv">
-  <div class="et-num">III</div>
-  <div><span class="lbl">Etapa tres</span><h2>El restaurante</h2><span class="estado">En el horizonte</span></div>
- </div>
- <div class="et-grid">
-  <div class="txt rv">
-   <p class="lead">De la repostería a la mesa completa.</p>
-   <p>Un restaurante con cocina propia: desayunos, brunch y almuerzos, con el mismo cuidado de presentación que ya existe en la caja y en la taza.</p>
-   <div class="iconos">
-    <div class="ico"><svg viewBox="0 0 40 40"><path d="M12 5v12M8 5v8a4 4 0 0 0 8 0V5M12 17v18M28 35V5c-5 3-6 9-6 14h6"/></svg><div><b>Cocina propia</b><span>Platos de temporada</span></div></div>
-    <div class="ico"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="6"/><path d="M20 4v6M20 30v6M4 20h6M30 20h6M9 9l4 4M27 27l4 4M31 9l-4 4M13 27l-4 4"/></svg><div><b>Desayuno y brunch</b><span>Mañana y mediodía</span></div></div>
-   </div>
-  </div>
-  <div class="foto rv"><img src="assets/fotos/brunch.jpg" alt="Brunch Kaffei" loading="lazy" style="object-position:center"></div>
- </div>
- <div class="menu tent rv">
-  <div class="menu-top"><h3>Menú · Etapa III</h3><span class="lbl">Propuesta</span></div>
-  <div class="lista on">
-   <div class="it"><div class="row"><b>Desayunos</b><span class="dots"></span><span class="pr">En diseño</span></div><p>Huevos, panes de la casa y fruta.</p></div>
-   <div class="it"><div class="row"><b>Brunch</b><span class="dots"></span><span class="pr">En diseño</span></div><p>Platos para compartir, fines de semana.</p></div>
-   <div class="it"><div class="row"><b>Almuerzos</b><span class="dots"></span><span class="pr">En diseño</span></div><p>Carta corta, producto de temporada.</p></div>
-   <div class="it"><div class="row"><b>Carta de café y postres</b><span class="dots"></span><span class="pr">En diseño</span></div><p>Todo lo de las etapas anteriores.</p></div>
-  </div>
- </div>
-</div></section>
-
-<!-- ETAPA 4 -->
-<section class="etapa crema" id="etapa4"><div class="wrap">
- <div class="et-head rv">
-  <div class="et-num">IV</div>
-  <div><span class="lbl">Etapa cuatro</span><h2>Varias sedes</h2><span class="estado">A futuro</span></div>
- </div>
- <div class="et-grid">
-  <div class="vis mapacard rv">
-   <div class="puntos">
-    <svg viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M24 62 Q38 38 52 46 T78 28" fill="none" stroke="rgba(169,131,79,.55)" stroke-width=".4" stroke-dasharray="1.2 1.2"/></svg>
-    <span style="left:22%;top:60%"></span><span style="left:50%;top:44%"></span><span style="left:76%;top:26%"></span>
-   </div>
-   <img class="civ" src="assets/civeta-crema.png" alt="" style="position:relative;width:46%;margin-top:34%">
-  </div>
-  <div class="txt rv">
-   <p class="lead">La misma casa, en más lugares.</p>
-   <p>Cuando una sede funciona bien, se repite con el mismo estándar. Cada nueva sede mantiene el logo, la paleta, el tono y la forma de servir.</p>
-   <div class="iconos">
-    <div class="ico"><svg viewBox="0 0 40 40"><path d="M20 36s11-10 11-18a11 11 0 0 0-22 0c0 8 11 18 11 18z"/><circle cx="20" cy="18" r="4"/></svg><div><b>Nuevas sedes</b><span>Una por una, con calma</span></div></div>
-    <div class="ico"><svg viewBox="0 0 40 40"><path d="M6 32 20 8l14 24zM13 32l7-12 7 12"/></svg><div><b>Un solo estándar</b><span>Marca y producto iguales</span></div></div>
-   </div>
-  </div>
- </div>
- <div class="menu tent rv">
-  <div class="menu-top"><h3>Menú · Etapa IV</h3><span class="lbl">Propuesta</span></div>
-  <div class="lista on">
-   <div class="it"><div class="row"><b>Carta base</b><span class="dots"></span><span class="pr">Común</span></div><p>Café y postres, iguales en todas las sedes.</p></div>
-   <div class="it"><div class="row"><b>Carta de la sede</b><span class="dots"></span><span class="pr">Local</span></div><p>Un plato o postre propio de cada lugar.</p></div>
-  </div>
- </div>
-</div></section>
-
-<!-- CIERRE -->
-<section class="cierre" id="contacto"><div class="wrap">
- <img class="k rv" src="assets/k-crema.png" alt="Kaffei">
- <h2 class="rv">Estamos en la <em>primera etapa.</em></h2>
- <p class="rv">Si quiere probar lo que hacemos hoy, escríbanos. Cada pedido de ahora es parte de lo que viene.</p>
- <div class="btns rv">
-  <a class="btn solid" href="https://wa.me/50600000000?text=Hola%2C%20quisiera%20hacer%20un%20pedido%20de%20postres%20Kaffei." target="_blank" rel="noopener">Pedir por WhatsApp</a>
-  <a class="btn" href="https://instagram.com/kaffei" target="_blank" rel="noopener">Seguir en Instagram</a>
- </div>
- <footer><span>Kaffei · Costa Rica</span><span>Cafetería de especialidad</span></footer>
-</div></section>
+<footer class="bg-espresso py-10 text-center text-xs uppercase tracking-[.25em] text-crema/45">
+ <img src="assets/k-crema.png" alt="K" class="mx-auto mb-5 h-8 opacity-80">
+ Kaffei · Costa Rica
+</footer>
 
 <script>
 const nav=document.getElementById('nav');
-const onS=()=>nav.classList.toggle('on',scrollY>60);addEventListener('scroll',onS);onS();
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+const s=()=>nav.classList.toggle('bg-white/80',scrollY>40),s2=()=>nav.classList.toggle('backdrop-blur-xl',scrollY>40);
+addEventListener('scroll',()=>{s();s2()});s();s2();
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
-document.querySelectorAll('#menu1 .tabs button').forEach(b=>b.onclick=()=>{
- document.querySelectorAll('#menu1 .tabs button').forEach(x=>x.classList.toggle('on',x===b));
- document.querySelectorAll('#menu1 .lista').forEach(l=>l.classList.toggle('on',l.dataset.l===b.dataset.t));
-});
 </script>
 </body>
 </html>
