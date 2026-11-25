@@ -875,6 +875,36 @@ section.social{padding-bottom:70px}
 .hoja .item .precio,.hoja .item .n{font-variant-numeric:lining-nums}
 .pg-num{display:none}
 .barra-m .pg-titulo{font:600 22px/1 var(--sans);letter-spacing:.14em;color:var(--bronce)}
+
+/* =========================================================
+   RESPONSIVE: en celular la carta es una sola columna hacia abajo
+   ========================================================= */
+@media(max-width:760px){
+  .barra-m{display:none}
+  .paginas{display:block!important;height:auto!important;overflow:visible!important;scroll-snap-type:none}
+  .pag{min-width:0;flex:none;padding:6px 0 26px;border-bottom:1px solid #F1E8DA}
+  .pag:last-child{border-bottom:0}
+  .pg-num{display:none}
+  .marco{margin:10px;padding:24px 18px 44px}
+  .sobre-wrap{width:100%}
+  .hoja{left:3%;right:3%}
+  .sobre-wrap.listo .hoja{width:94%}
+  .cat-t{font-size:40px}
+  .indice{max-width:none}
+}
+/* Pantallas muy chicas */
+@media(max-width:380px){
+  html{font-size:16px}
+  .marca{letter-spacing:.1em}
+  .hero .rapido{flex-direction:column}
+  .f-item{grid-template-columns:76px 1fr}
+  .hoja .item .n{font-size:24px}
+  .btn{padding:0 20px}
+}
+@media(max-width:420px){.hero .marca{font-size:clamp(46px,16vw,70px);letter-spacing:.12em;padding-left:.12em}}
+/* Evita cualquier desborde horizontal */
+html,body{max-width:100%;overflow-x:hidden}
+img,video,svg{max-width:100%}
 </style>
 </head>
 <body>
@@ -1395,8 +1425,10 @@ function pintaMenu(){
   $("#paginas").innerHTML = paginas.map(htmlPagina).join("");
   pgAct = 0; marcaPagina();
 }
+const esMovil = ()=>matchMedia("(max-width:760px)").matches;
 function irPagina(i, suave=true){
   i = Math.max(0, Math.min(paginas.length-1, i));
+  if(esMovil()){ const el=$("#paginas").children[i]; if(el && suave){ window.scrollTo({top:el.getBoundingClientRect().top+scrollY-84,behavior:"smooth"}); } pgAct=i; return; }
   const t = $("#paginas"); t.scrollTo({left:i*t.clientWidth, behavior: suave?"smooth":"auto"});
   pgAct = i; marcaPagina();
   if(suave){ const top=t.getBoundingClientRect().top; if(top<140) window.scrollTo({top:scrollY+top-140,behavior:"smooth"}); }
@@ -1408,7 +1440,7 @@ function marcaPagina(){
   $("#pgPrev").disabled = pgAct===0; $("#pgNext").disabled = pgAct===paginas.length-1;
   $("#tabsM").textContent = (pgAct+1)+" / "+paginas.length;
   // el alto de la hoja sigue al de la página que se ve
-  const el = $("#paginas").children[pgAct]; if(el) $("#paginas").style.height = el.offsetHeight+"px";
+  const el = $("#paginas").children[pgAct]; if(el) $("#paginas").style.height = esMovil() ? "" : el.offsetHeight+"px";
 }
 let pgTick=false;
 $("#paginas").addEventListener("scroll",()=>{ if(pgTick) return; pgTick=true; requestAnimationFrame(()=>{ pgTick=false; const t=$("#paginas"); const i=Math.round(t.scrollLeft/Math.max(1,t.clientWidth)); if(i!==pgAct){ pgAct=i; marcaPagina(); } }); },{passive:true});
@@ -1420,7 +1452,7 @@ $("#paginas").addEventListener("click",e=>{
   const it=e.target.closest(".item"); if(it) abreFicha(+it.dataset.i);
 });
 addEventListener("keydown",e=>{ if(!location.hash.startsWith("#carta") || abiertos.length || $("#cal").classList.contains("on")) return; if(e.key==="ArrowRight") irPagina(pgAct+1); if(e.key==="ArrowLeft") irPagina(pgAct-1); });
-addEventListener("resize",()=>irPagina(pgAct,false));
+addEventListener("resize",()=>{ if(!esMovil()) irPagina(pgAct,false); else { $("#paginas").style.height=""; } });
 
 
 /* ---------- Calendario propio ---------- */
